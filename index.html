@@ -75,7 +75,7 @@
                 height: 80%;
             }
             .fb-chat-with-counter code {
-                font-size: .75em;
+                font-size: .85em;
             }
 
             .fb-chat-with-counter .snippet {
@@ -92,29 +92,36 @@
             <code>  var chatTab = ChatTabs.getChatTab(message.threadId);</code>
             <code>  chatTab.appendMessage(message)</code>
             <code> </code>
-            <code>  <mark>if (chatTab.hasFocus()) {</mark></code>
+            <code>  <mark>if (chatTab.hasFocus())</mark></code>
             <code>      <mark>UnseenCount.decrement();</mark></code>
-            <code>  <mark>}</mark></code>
             <code>}</code>
         </pre>
     </section>
     <section class="slide fb-chat-full">
         <style>
-            .fb-chat-with-counter .image {
+            .fb-chat-full .image {
                 position: absolute;
                 bottom: 0;
-                right: 50px;
-                height: 80%;
-            }
-            .fb-chat-with-counter code {
-                font-size: .75em;
-            }
-            .fb-chat-full .snippet {
-                z-index: 1;
+                height: 70%;
             }
         </style>
-        <h2>Chat with counter</h2>
+        <h2>What about this?</h2>
         <img src="./pictures/fb-full.JPG" alt="Facebook chat" class="image" />
+    </section>
+    <section class="slide fb-chat-full">
+        <style>
+            .fb-chat-full code {
+                font-size: .60em;
+            }
+
+            .fb-chat-full .pasta {
+                position: absolute;
+                right: 50px;
+                bottom: 50px;
+            }
+        </style>
+        <h2>Chat, threads and counter</h2>
+        <img src="./pictures/pasta.jpg" alt="Pasta" class="pasta" />
         <pre class="snippet">
             <code>function newMessageHandler(newMessage) {</code>
             <code>  <mark>UnseenCount.increment();</mark></code>
@@ -122,11 +129,42 @@
             <code>  var chatTab = ChatTabs.getChatTab(message.threadId);</code>
             <code>  chatTab.appendMessage(message)</code>
             <code> </code>
-            <code>  <mark>if (chatTab.hasFocus()) {</mark></code>
-            <code>      <mark>UnseenCount.decrement();</mark></code>
-            <code>  <mark>}</mark></code>
+            <code>  <mark>var messageView = Messages.getOpenView();</mark></code>
+            <code>  <mark>var threadId = messageView.getThreadId();</mark></code>
+            <code>  <mark>if (threadId === message.threadId)</mark></code>
+            <code>  <mark>  messageView.appendMessage(message)</mark></code>
+            <code> </code>
+            <code>  if (chatTab.hasFocus()<mark> || threadId === message.threadId</mark>)</code>
+            <code>      UnseenCount.decrement();</code>
             <code>}</code>
         </pre>
+    </section>
+    <section class="slide wrong-way">
+        <style>
+            .wrong-way b {
+                color: red;
+            }
+        </style>
+        <h2>We might doing something <b>wrong</b> in general?</h2>
+        <img src="./pictures/the_wrong_way.jpg" alt="Wrong way" class="cover" />
+    </section>
+    <section class="slide external-control">
+        <style>
+        </style>
+        <h2>External control</h2>
+        <img src="./pictures/external-control.jpg" alt="External control" class="image" />
+    </section>
+    <section class="slide internal-control">
+        <style>
+        </style>
+        <h2>Internal control</h2>
+        <img src="./pictures/internal-control.jpg" alt="Internal control" class="image" />
+    </section>
+    <section class="slide internal-control">
+        <style>
+        </style>
+        <h2>Internal control: action flow</h2>
+        <img src="./pictures/internal-control-action-flow.jpg" alt="Internal control, action flow" class="image" />
     </section>
     <p class="badge">
         <a href="https://github.com/shower/shower">Powered by Shower</a>
