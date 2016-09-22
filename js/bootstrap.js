@@ -18,8 +18,8 @@ const app = () => (
 )
 
 document.addEventListener('DOMContentLoaded',
-    () => render(
-        React.createElement(app),
-        document.getElementById('redux-example')
-    )
+    () => {
+        const root = document.getElementById('redux-example');
+        render(React.createElement(app), root.createShadowRoot());
+    }
 );
