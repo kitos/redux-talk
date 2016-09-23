@@ -74,6 +74,7 @@
                 right: 50px;
                 height: 80%;
             }
+
             .fb-chat-with-counter code {
                 font-size: .85em;
             }
@@ -150,27 +151,122 @@
     </section>
     <section class="slide external-control">
         <style>
+
         </style>
         <h2>External control</h2>
         <img src="./pictures/external-control.jpg" alt="External control" class="image" />
     </section>
     <section class="slide internal-control">
         <style>
+
         </style>
         <h2>Internal control</h2>
         <img src="./pictures/internal-control.jpg" alt="Internal control" class="image" />
     </section>
     <section class="slide internal-control-action-flow">
         <style>
+
         </style>
         <h2>Internal control: action flow</h2>
         <img src="./pictures/internal-control-action-flow.jpg" alt="Internal control, action flow" class="image" />
     </section>
-    <section class="slide redux-example">
+    <section class="slide good-boys">
+        <style>
+
+        </style>
+        <h2>We are good boys, we are not mixing view with model, aren't we?</h2>
+        <img src="./pictures/good-boys.png" alt="Separate view with model" class="image" />
+    </section>
+    <section class="slide good-boys">
+        <style>
+
+        </style>
+        <h2>Generic system</h2>
+        <img src="./pictures/generic-system.jpg" alt="Generic system" class="image" />
+    </section>
+    <section class="slide flux">
+        <style>
+
+        </style>
+        <h2>Here is flux</h2>
+        <img src="./pictures/flux.jpg" alt="Flux" class="image" />
+    </section>
+    <section class="slide what-is-going-on">
+        <style>
+
+        </style>
+        <img src="./pictures/what-is-going-on.jpg" alt="Flux" class="cover" />
+    </section>
+    <section class="slide redux-comes-in">
+        <style>
+
+        </style>
+        <h2>Single source of truth</h2>
+        <figure>
+            <blockquote>
+                <p>The state of your whole application is stored in an object tree within a single store.</p>
+            </blockquote>
+            <figcaption>First redux pricipal</figcaption>
+        </figure>
+        <pre>
+            <code>import { createStore } from 'redux';</code>
+            <code> </code>
+            <code>const store = createStore(...);</code>
+        </pre>
+    </section>
+    <section class="slide redux-comes-in">
         <style>
         </style>
-        <h2>Example</h2>
+        <h2>State is read-only</h2>
+        <figure>
+            <blockquote>
+                <p>The only way to change the state is to emit an action, an object describing what happened.</p>
+            </blockquote>
+            <figcaption>Second redux pricipal</figcaption>
+        </figure>
+        <pre>
+            <code>store.dispatch({</code>
+            <code>  type: 'ANY_ACTION',</code>
+            <code>  payload: 'some data goes here'</code>
+            <code>  error: false // to deliver error</code>
+            <code>})</code>
+        </pre>
+    </section>
+    <section class="slide reducers">
+        <style>
+            .reducers code {
+                font-size: 0.8em;
+            }
+        </style>
+        <h2>Changes are made with pure functions</h2>
+        <figure>
+            <blockquote>
+                <p>To specify how the state tree is transformed by actions, you write pure reducers.</p>
+            </blockquote>
+            <figcaption>Third redux pricipal</figcaption>
+        </figure>
+        <pre>
+            <code>function myReducer(state = {}, action) {</code>
+            <code>  switch (action.type) {</code>
+            <code>    case 'ACTION_I_KNOW_HOW_TO_PROCESS':</code>
+            <code>      return { ...state, some: change }</code>
+            <code>    default:</code>
+            <code>      return state;</code>
+            <code>}</code>
+        </pre>
+    </section>
+    <section class="slide redux-example">
+        <style>
+
+        </style>
+        <h2>Example: todo</h2>
         <div id="redux-example"></div>
+    </section>
+    <section class="slide why-redux">
+        <style>
+
+        </style>
+        <h2>Why should I use redux?</h2>
     </section>
     <p class="badge">
         <a href="https://github.com/shower/shower">Powered by Shower</a>
