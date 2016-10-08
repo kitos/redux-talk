@@ -15,7 +15,7 @@ module.exports = {
     },
 
     output: {
-        path: './__build__',
+        path: './build',
         filename: '[name].js'
     },
 

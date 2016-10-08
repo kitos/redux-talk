@@ -20,7 +20,9 @@ gulp.task('prepare', () => {
 			'!LICENSE.md',
 			'!README.md',
 			'!gulpfile.js',
-			'!package.json'
+			'!package.json',
+			'!webpack.config.js',
+            '!js{,/**}',
 		])
 		.pipe(replace(
 			/(<link rel="stylesheet" href=")(node_modules\/shower-)([^\/]*)\/(.*\.css">)/g,
