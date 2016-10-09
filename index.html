@@ -142,7 +142,7 @@
         <img src="./pictures/pasta.jpg" alt="Pasta" class="pasta" />
         <pre class="snippet">
             <code>function newMessageHandler(newMessage) {</code>
-            <code>  <mark>UnseenCount.increment();</mark></code>
+            <code>  UnseenCount.increment();</code>
             <code> </code>
             <code>  var chatTab = ChatTabs.getChatTab(message.threadId);</code>
             <code>  chatTab.appendMessage(message)</code>
@@ -330,13 +330,13 @@
             <code> </code>
             <code>const store = createStore(reducer);</code>
             <code> </code>
-            <code>document.getElementById('js-increment')</code>
+            <code>document.querySelector('.js-increment')</code>
             <code>  .click = () => store.dispatch('INCREMENT')</code>
             <code> ...</code>
-            <code>var valueEl = document.getElementById('js-value');</code>
+            <code>var valueEl = document.querySelector('.js-value');</code>
             <code> </code>
             <code>store.subscribe(</code>
-            <code>  () => value.innerHTML = store.getState().toString()</code>
+            <code>  () => valueEl.innerHTML = store.getState().toString()</code>
             <code>);</code>
         </pre>
     </section>
@@ -344,14 +344,14 @@
         <h2>Counter app</h2>
         <pre>
             <code class="code-comment">// reducer.js</code>
-            <code>export default counter(state = 0, action) {</code>
-            <code>switch (action.type) {</code>
-            <code>  case 'INCREMENT':</code>
-            <code>      return state + 1;</code>
-            <code>  case 'DECREMENT':</code>
-            <code>      return state - 1;</code>
-            <code>  default:</code>
-            <code>      return state;</code>
+            <code>export default function counter(state = 0, action) {</code>
+            <code>  switch (action.type) {</code>
+            <code>      case 'INCREMENT':</code>
+            <code>          return state + 1;</code>
+            <code>      case 'DECREMENT':</code>
+            <code>          return state - 1;</code>
+            <code>      default:</code>
+            <code>          return state;</code>
             <code>}</code>
         </pre>
     </section>
