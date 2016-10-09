@@ -367,6 +367,32 @@
         <h2>redux-devtools</h2>
         <div id="redux-example"></div>
     </section>
+    <section class="slide">
+        <h2>Middleware</h2>
+        <p>It provides a third-party extension point between dispatching an action, and the moment it reaches the reducer</p>
+        <ul>
+            <li class="next">logging</li>
+            <li class="next">crash reporting</li>
+            <li class="next">talking to an asynchronous API</li>
+            <li class="next">routing</li>
+            <li class="next">...</li>
+        </ul>
+    </section>
+    <section class="slide">
+        <h2>Async Actions (<a href="https://github.com/gaearon/redux-thunk">redux-thunk</a>)</h2>
+        <pre>
+            <code>export function asyncAction(idOfSomething) {</code>
+            <code>  return dispatch => {</code>
+            <code>      dispatch({ type: 'START_FETCHING_SOMETHING' });</code>
+            <code>      fetch(`/something/${idOfSomething}`)</code>
+            <code>          .then(response => dispatch({</code>
+            <code>              type: 'FETCHED_SOMETHING',</code>
+            <code>              payload: response</code>
+            <code>           }));</code>
+            <code>  };</code>
+            <code>}</code>
+        </pre>
+    </section>
     <section class="slide why-redux">
         <style>
         </style>
