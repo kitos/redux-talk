@@ -223,7 +223,9 @@
     </section>
     <section class="slide redux-comes-in">
         <style>
-
+            .code-comment {
+                color: green;
+            }
         </style>
         <h2>Single source of truth</h2>
         <figure>
@@ -236,6 +238,10 @@
             <code>import { createStore } from 'redux';</code>
             <code> </code>
             <code>const store = createStore(...);</code>
+            <code> </code>
+            <code>store.subscribe(</code>
+            <code>  () => console.log(store.getState())</code>
+            <code>)</code>
         </pre>
     </section>
     <section class="slide redux-comes-in">
@@ -252,16 +258,11 @@
             <code>store.dispatch({</code>
             <code>  type: 'ANY_ACTION',</code>
             <code>  payload: 'some data goes here'</code>
-            <code>  error: false // to deliver error</code>
+            <code>  error: false <span class="code-comment">// to deliver error</span></code>
             <code>})</code>
         </pre>
     </section>
     <section class="slide reducers">
-        <style>
-            .reducers code {
-                font-size: 0.8em;
-            }
-        </style>
         <h2>Changes are made with pure functions</h2>
         <figure>
             <blockquote>
@@ -279,9 +280,79 @@
             <code>}</code>
         </pre>
     </section>
+    <section class="slide">
+        <img src="pictures/easy.jpg" alt="Easy, hah?" class="cover" />
+    </section>
+    <section class="slide">
+        <style>
+            .counter-app {
+                border: 1px solid gray;
+                padding: 10px;
+            }
+        </style>
+        <h2>Counter app (markup)</h2>
+        <pre>
+            <code>&lt;body&gt;</code>
+            <code>  &lt;span class="js-value"&gt;0&lt;/span&gt;</code>
+            <code>  &lt;br/></code>
+            <code>  &lt;button class="js-increment-btn"&gt;+&lt;/button&gt;</code>
+            <code>  &lt;button class="js-decrement-btn"&gt;-&lt;/button&gt;</code>
+            <code>&lt;/body&gt;</code>
+        </pre>
+        <div class="counter-app">
+            <span class="js-value">0</span>
+            <br>
+            <button class="js-increment-btn">+</button>
+            <button class="js-decrement-btn">-</button>
+        </div>
+    </section>
+    <section class="slide counter-index">
+        <style>
+            .counter-index code {
+                font-size: 0.8em;
+            }
+        </style>
+        <h2>Counter app</h2>
+        <pre>
+            <code class="code-comment">// index.js</code>
+            <code>import { createStore } from 'redux'</code>
+            <code>import reducer from './reducer'</code>
+            <code> </code>
+            <code>const store = createStore(reducer);</code>
+            <code> </code>
+            <code>document.getElementById('js-increment')</code>
+            <code>  .click = () => store.dispatch('INCREMENT')</code>
+            <code> ...</code>
+            <code>var valueEl = document.getElementById('js-value');</code>
+            <code> </code>
+            <code>store.subscribe(</code>
+            <code>  () => value.innerHTML = store.getState().toString()</code>
+            <code>);</code>
+        </pre>
+    </section>
+    <section class="slide">
+        <h2>Counter app</h2>
+        <pre>
+            <code class="code-comment">// reducer.js</code>
+            <code>export default counter(state = 0, action) {</code>
+            <code>switch (action.type) {</code>
+            <code>  case 'INCREMENT':</code>
+            <code>      return state + 1;</code>
+            <code>  case 'DECREMENT':</code>
+            <code>      return state - 1;</code>
+            <code>  default:</code>
+            <code>      return state;</code>
+            <code>}</code>
+        </pre>
+    </section>
     <section class="slide redux-example">
         <style>
-
+            .why-redux img {
+                position: absolute;
+                bottom: 0;
+                right: 0;
+                width: 400px;
+            }
         </style>
         <h2>redux-devtools</h2>
         <div id="redux-example"></div>
@@ -290,11 +361,13 @@
         <style>
         </style>
         <h2>Why should I use redux?</h2>
+        <img src="pictures/why.jpg">
         <ul>
             <li>flux like solution</li>
             <li>it is maintained by Dan Abramov (Facebook developer)</li>
             <li>it is tiny (2kB, including dependencies)</li>
             <li>it has great community</li>
+            <li>believe me</li>
         </ul>
     </section>
     <section class="slide why-redux">
