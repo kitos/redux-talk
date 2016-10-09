@@ -142,7 +142,7 @@
         <img src="./pictures/pasta.jpg" alt="Pasta" class="pasta" />
         <pre class="snippet">
             <code>function newMessageHandler(newMessage) {</code>
-            <code>  <mark>UnseenCount.increment();</mark></code>
+            <code>  UnseenCount.increment();</code>
             <code> </code>
             <code>  var chatTab = ChatTabs.getChatTab(message.threadId);</code>
             <code>  chatTab.appendMessage(message)</code>
@@ -167,51 +167,38 @@
         <img src="./pictures/the_wrong_way.jpg" alt="Wrong way" class="cover" />
     </section>
     <section class="slide external-control">
-        <style>
-
-        </style>
         <h2>External control</h2>
         <img src="./pictures/external-control.jpg" width="700" alt="External control" class="image scheme-img" />
     </section>
     <section class="slide internal-control">
-        <style>
-
-        </style>
         <h2>Internal control</h2>
         <img src="./pictures/internal-control.jpg" width="600" alt="Internal control" class="image scheme-img" />
     </section>
     <section class="slide internal-control-action-flow">
-        <style>
-
-        </style>
         <h2>Internal control: action flow</h2>
         <img src="./pictures/internal-control-action-flow.jpg" width="700" alt="Internal control, action flow" class="image scheme-img" />
     </section>
     <section class="slide good-boys">
-        <style>
-
-        </style>
         <h2>We are good boys, we are not mixing view with model, aren't we?</h2>
         <img src="./pictures/good-boys.jpg" width="700" alt="Separate view with model" class="image scheme-img" />
     </section>
     <section class="slide good-boys">
-        <style>
-
-        </style>
         <h2>Generic system</h2>
         <img src="./pictures/generic-system.jpg" width="700" alt="Generic system" class="image scheme-img" />
     </section>
     <section class="slide flux">
-        <style>
-
-        </style>
         <h2>Here is flux</h2>
         <img src="./pictures/flux.jpg" width="700" alt="Flux" class="image scheme-img" />
     </section>
+    <section class="slide flux">
+        <h2>Benefits</h2>
+        <ul>
+            <li class="next">Improved data consistency</li>
+            <li class="next">Easier to pinpoint root of a bug</li>
+            <li class="next">Easy to test</li>
+        </ul>
+    </section>
     <section class="slide what-is-going-on">
-        <style>
-
-        </style>
         <img src="./pictures/what-is-going-on.jpg" alt="Flux" class="cover" />
     </section>
     <section class="slide redux">
@@ -272,6 +259,19 @@
             <code>})</code>
         </pre>
     </section>
+    <section class="slide">
+        <h2>Action creators</h2>
+        <pre>
+            <code>export const MY_ACTION = 'my_action';</code>
+            <code> </code>
+            <code>export functon performMyAction(data) {</code>
+            <code>  return {</code>
+            <code>      type: MY_ACTION,</code>
+            <code>      payload: data</code>
+            <code>  };</code>
+            <code>}</code>
+        </pre>
+    </section>
     <section class="slide reducers">
         <h2>Changes are made with pure functions</h2>
         <figure>
@@ -330,13 +330,13 @@
             <code> </code>
             <code>const store = createStore(reducer);</code>
             <code> </code>
-            <code>document.getElementById('js-increment')</code>
+            <code>document.querySelector('.js-increment')</code>
             <code>  .click = () => store.dispatch('INCREMENT')</code>
             <code> ...</code>
-            <code>var valueEl = document.getElementById('js-value');</code>
+            <code>var valueEl = document.querySelector('.js-value');</code>
             <code> </code>
             <code>store.subscribe(</code>
-            <code>  () => value.innerHTML = store.getState().toString()</code>
+            <code>  () => valueEl.innerHTML = store.getState().toString()</code>
             <code>);</code>
         </pre>
     </section>
@@ -344,14 +344,14 @@
         <h2>Counter app</h2>
         <pre>
             <code class="code-comment">// reducer.js</code>
-            <code>export default counter(state = 0, action) {</code>
-            <code>switch (action.type) {</code>
-            <code>  case 'INCREMENT':</code>
-            <code>      return state + 1;</code>
-            <code>  case 'DECREMENT':</code>
-            <code>      return state - 1;</code>
-            <code>  default:</code>
-            <code>      return state;</code>
+            <code>export default function counter(state = 0, action) {</code>
+            <code>  switch (action.type) {</code>
+            <code>      case 'INCREMENT':</code>
+            <code>          return state + 1;</code>
+            <code>      case 'DECREMENT':</code>
+            <code>          return state - 1;</code>
+            <code>      default:</code>
+            <code>          return state;</code>
             <code>}</code>
         </pre>
     </section>
@@ -366,6 +366,32 @@
         </style>
         <h2>redux-devtools</h2>
         <div id="redux-example"></div>
+    </section>
+    <section class="slide">
+        <h2>Middleware</h2>
+        <p>It provides a third-party extension point between dispatching an action, and the moment it reaches the reducer</p>
+        <ul>
+            <li class="next">logging</li>
+            <li class="next">crash reporting</li>
+            <li class="next">talking to an asynchronous API</li>
+            <li class="next">routing</li>
+            <li class="next">...</li>
+        </ul>
+    </section>
+    <section class="slide">
+        <h2>Async Actions (<a href="https://github.com/gaearon/redux-thunk">redux-thunk</a>)</h2>
+        <pre>
+            <code>export function asyncAction(idOfSomething) {</code>
+            <code>  return dispatch => {</code>
+            <code>      dispatch({ type: 'START_FETCHING_SOMETHING' });</code>
+            <code>      fetch(`/something/${idOfSomething}`)</code>
+            <code>          .then(response => dispatch({</code>
+            <code>              type: 'FETCHED_SOMETHING',</code>
+            <code>              payload: response</code>
+            <code>           }));</code>
+            <code>  };</code>
+            <code>}</code>
+        </pre>
     </section>
     <section class="slide why-redux">
         <style>
@@ -582,6 +608,15 @@
                 <div class="count">138</div>
             </a>
         </div>
+    </section>
+    <section class="slide">
+        <h2>Companies which are using redux</h2>
+        <ul>
+            <li>EPAM (in a lot of projects)</li>
+            <li><a href="https://twitter.com/necolas/status/727538799966715904">Twitter's mobile site</a></li>
+            <li><a href="https://github.com/jlongster/debugger.html">Firefox's new debugger</a></li>
+            <li>...</li>
+        </ul>
     </section>
     <section class="slide google-trends">
         <style>
