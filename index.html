@@ -309,8 +309,6 @@
         </pre>
     </section>
     <section class="slide">
-        <style>
-        </style>
         <h2>Pure functions benefits</h2>
         <ul>
             <li class="next">caching</li>
@@ -382,6 +380,64 @@
             <code>          return state;</code>
             <code>}</code>
         </pre>
+    </section>
+    <section class="slide derived-data">
+        <style>
+            .derived-data code {
+                font-size: 0.9em;
+            }
+        </style>
+        <h2>Derived data</h2>
+        <pre>
+            <code class="code-comment">// avoid</code>
+            <code>const messageReducer = (state, action) => {</code>
+            <code>    switch (action.type) {</code>
+            <code>        case 'NEW_MESSAGE':</code>
+            <code>            return {</code>
+            <code>                ...state,</code>
+            <code>                messages: state.messages.concat([action.payload]),</code>
+            <code>                <mark>unreadMessages: state.unreadMessages + 1,</mark></code>
+            <code>            }</code>
+            <code>      default:</code>
+            <code>          return state;</code>
+            <code>}</code>
+        </pre>
+    </section>
+    <section class="slide true-derived-data">
+        <style>
+            .true-derived-data code {
+                font-size: .8em;
+            }
+        </style>
+        <h2>Derived data</h2>
+        <pre>
+            <code class="code-comment">// recommended</code>
+            <code>const messageReducer = (state, action) => {</code>
+            <code>    switch (action.type) {</code>
+            <code>        case 'NEW_MESSAGE': ...</code>
+            <code>        case 'MESSAGE_WAS_READ':</code>
+            <code>            return {</code>
+            <code>                <mark>messages: state.messages.map(message => {</mark></code>
+            <code>                    <mark>if (message.id === action.payload) {</mark></code>
+            <code>                        <mark>return { ...message, read: true }</mark></code>
+            <code>                    <mark>}</mark></code>
+            <code>                    <mark>return message</mark></code>
+            <code>                <mark>}),</mark></code>
+            <code>            }</code>
+            <code>}</code>
+        </pre>
+    </section>
+    <section class="slide">
+        <h2>reselect</h2>
+    </section>
+    <section class="slide">
+        <h2>Normalizr</h2>
+    </section>
+    <section class="slide">
+        <h2>thanks to redux I've started to learn FP</h2>
+        <h2>thanks to observable/sagas we can split pure functions with side effects</h2>
+        <p>Redux wants all actual state update logic to be synchronous, and wants asynchronous behavior kept separate from the act of updating the state.</p>
+        <h2>you shouldn't store everything in redux, especially with fiber</h2>
     </section>
     <section class="slide redux-example">
         <style>
@@ -648,15 +704,16 @@
             <li>...</li>
         </ul>
     </section>
-    <section class="slide google-trends">
-        <style>
-        </style>
-        <h2>Google trends</h2>
-        <script type="text/javascript" src="https://ssl.gstatic.com/trends_nrtr/760_RC01/embed_loader.js"></script> <script type="text/javascript"> trends.embed.renderExploreWidget("TIMESERIES", {"comparisonItem":[{"keyword":"redux js","geo":"","time":"today 5-y"}],"category":0,"property":""}, {"exploreQuery":"q=redux%20js","guestPath":"https://www.google.ru:443/trends/embed/"});</script>
-    </section>
     <section class="slide white">
         <h2>Thank you!</h2>
         <a href="https://kitos.github.io/redux-talk/">kitos.github.io/redux-talk</a>
+        <br>
+        <br>
+        <h2>Further reading</h2>
+        <ul>
+            <li><a href="http://blog.isquaredsoftware.com/2017/05/idiomatic-redux-tao-of-redux-part-1/">Idiomatic Redux: The Tao of Redux, Part 1 - Implementation and Intent</a></li>
+            <li><a href="http://blog.isquaredsoftware.com/2017/05/idiomatic-redux-tao-of-redux-part-2/">Idiomatic Redux: The Tao of Redux, Part 2 - Practice and Philosophy</a></li>
+        </ul>
     </section>
     <section class="slide white">
         <h2 class="shout shrink">Questions</h2>
