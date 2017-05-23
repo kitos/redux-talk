@@ -427,8 +427,29 @@
             <code>}</code>
         </pre>
     </section>
-    <section class="slide">
+    <section class="slide reselect">
+        <style>
+            .reselect code {
+                font-size: .8em;
+            }
+        </style>
         <h2>reselect</h2>
+        <pre>
+            <code>import { createSelector } from 'reselect';</code>
+            <code> </code>
+            <code>const messagesSelector = state => state.messages</code>
+            <code> </code>
+            <code>const unreadMessages = createSelector(messages,</code>
+            <code>          messagesSelector,</code>
+            <code>          messages => messages.filter(m => !m.read)</code>
+            <code>)</code>
+            <code> </code>
+            <code>const unreadMessagesCount => createSelector(</code>
+            <code>          unreadMessages,</code>
+            <code>          messages => messages.length</code>
+            <code>)</code>
+            <code> </code>
+        </pre>
     </section>
     <section class="slide">
         <h2>Normalizr</h2>
