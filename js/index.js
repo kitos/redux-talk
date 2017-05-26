@@ -8,3 +8,17 @@ const todoApp = combineReducers({
 })
 
 export default todoApp
+
+Rx.Observable.fromEvent(this.refs.input, 'input')
+    .map(event => event.target.value)
+    .filter(value => !!value)
+    .debounceTime(500)
+    .switchMap(searchTerm =>
+        ajax('/api/search', searchTerm)
+            .map(payload => ({ type: 'QUERY_FULLFILLED', payload }))
+            .catch(payload => ({
+                type: 'QUERY_FULLFILLED',
+                error: true,
+                payload
+            }))
+    )
