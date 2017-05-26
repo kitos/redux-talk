@@ -62,6 +62,17 @@
             <li><a href="https://github.com/kitos">github.com/kitos</a></li>
         </ul>
     </section>
+    <section class="slide">
+        <h2>Agenda</h2>
+        <ul>
+            <li>Problem</li>
+            <li>Solution</li>
+            <li>Why single store is cool</li>
+            <li>Pure functions</li>
+            <li>Derived data</li>
+            <li>Reactive programming in redux</li>
+        </ul>
+    </section>
     <section class="slide white">
         <h2 class="shout shrink">The most difficult task in development?</h2>
     </section>
@@ -240,6 +251,39 @@
             <code>)</code>
         </pre>
     </section>
+    <section class="slide single-store-benefits">
+        <style>
+            .recorder {
+                position: absolute;
+                right: 0;
+                bottom: 0;
+                width: 65%;
+                z-index: -1;
+            }
+        </style>
+        <h2>Single store benefits</h2>
+        <img src="./pictures/recorder.gif" alt="Recorder" class="recorder" />
+        <ul>
+            <li class="next">universal apps</li>
+            <li class="next">time travel</li>
+            <li class="next">record and replay (<a href="https://github.com/joshwcomeau/redux-vcr">recorder</a>)</li>
+            <li class="next">logging</li>
+            <li class="next">hot reloading</li>
+            <li class="next">...</li>
+        </ul>
+    </section>
+    <section class="slide redux-example">
+        <style>
+            .why-redux img {
+                position: absolute;
+                bottom: 0;
+                right: 0;
+                width: 400px;
+            }
+        </style>
+        <h2>redux-devtools</h2>
+        <img src="pictures/devtools.gif" alt="" height="70%">
+    </section>
     <section class="slide redux-comes-in">
         <style>
         </style>
@@ -256,19 +300,6 @@
             <code>  payload: 'some data goes here'</code>
             <code>  error: false <span class="code-comment">// to deliver error</span></code>
             <code>})</code>
-        </pre>
-    </section>
-    <section class="slide">
-        <h2>Action creators</h2>
-        <pre>
-            <code>export const MY_ACTION = 'my_action';</code>
-            <code> </code>
-            <code>export functon performMyAction(data) {</code>
-            <code>  return {</code>
-            <code>      type: MY_ACTION,</code>
-            <code>      payload: data</code>
-            <code>  };</code>
-            <code>}</code>
         </pre>
     </section>
     <section class="slide reducers">
@@ -290,7 +321,24 @@
         </pre>
     </section>
     <section class="slide">
-        <img src="pictures/easy.jpg" alt="Easy, hah?" class="cover" />
+        <h2>Pure functions benefits</h2>
+        <ul>
+            <li class="next">caching</li>
+            <li class="next">easy to test</li>
+            <li class="next">totally reusable</li>
+            <li class="next">can be optimized by engine</li>
+            <li class="next">thread safe (can be called concurrently)</li>
+            <li class="next">remote execution</li>
+        </ul>
+    </section>
+    <section class="slide">
+        <h2>Immutability</h2>
+        <ul>
+            <li class="next">thread safe</li>
+            <li class="next">remote execution</li>
+            <li class="next">removes complexity</li>
+            <li class="next">memoization</li>
+        </ul>
     </section>
     <section class="slide">
         <style>
@@ -354,21 +402,88 @@
             <code>}</code>
         </pre>
     </section>
-    <section class="slide redux-example">
+    <section class="slide derived-data">
         <style>
-            .why-redux img {
-                position: absolute;
-                bottom: 0;
-                right: 0;
-                width: 400px;
+            .derived-data code {
+                font-size: 0.9em;
             }
         </style>
-        <h2>redux-devtools</h2>
-        <div id="redux-example"></div>
+        <h2>Derived data</h2>
+        <pre>
+            <code class="code-comment">// avoid</code>
+            <code>const messageReducer = (state, action) => {</code>
+            <code>    switch (action.type) {</code>
+            <code>        case 'NEW_MESSAGE':</code>
+            <code>            return {</code>
+            <code>                ...state,</code>
+            <code>                messages: state.messages.concat([action.payload]),</code>
+            <code>                <mark>unreadMessages: state.unreadMessages + 1,</mark></code>
+            <code>            }</code>
+            <code>      default:</code>
+            <code>          return state;</code>
+            <code>}</code>
+        </pre>
+    </section>
+    <section class="slide true-derived-data">
+        <style>
+            .true-derived-data code {
+                font-size: .8em;
+            }
+        </style>
+        <h2>Derived data</h2>
+        <pre>
+            <code class="code-comment">// recommended</code>
+            <code>const messageReducer = (state, action) => {</code>
+            <code>    switch (action.type) {</code>
+            <code>        case 'NEW_MESSAGE': ...</code>
+            <code>        case 'MESSAGE_WAS_READ':</code>
+            <code>            return {</code>
+            <code>                <mark>messages: state.messages.map(message => {</mark></code>
+            <code>                    <mark>if (message.id === action.payload) {</mark></code>
+            <code>                        <mark>return { ...message, read: true }</mark></code>
+            <code>                    <mark>}</mark></code>
+            <code>                    <mark>return message</mark></code>
+            <code>                <mark>}),</mark></code>
+            <code>            }</code>
+            <code>}</code>
+        </pre>
+    </section>
+    <section class="slide reselect">
+        <style>
+            .reselect code {
+                font-size: .8em;
+            }
+        </style>
+        <h2>reselect</h2>
+        <pre>
+            <code>import { createSelector } from 'reselect';</code>
+            <code> </code>
+            <code>const messagesSelector = state => state.messages</code>
+            <code> </code>
+            <code>const unreadMessages = createSelector(messages,</code>
+            <code>          messagesSelector,</code>
+            <code>          messages => messages.filter(m => !m.read)</code>
+            <code>)</code>
+            <code> </code>
+            <code>const unreadMessagesCount => createSelector(</code>
+            <code>          unreadMessages,</code>
+            <code>          messages => messages.length</code>
+            <code>)</code>
+            <code> </code>
+        </pre>
+    </section>
+    <section class="slide">
+        <h2>Regular API response</h2>
+        <img src="pictures/without-normalizr.JPG" alt="">
+    </section>
+    <section class="slide">
+        <h2>Normalized data (<a href="https://github.com/paularmstrong/normalizr">normalizr</a>)</h2>
+        <img src="pictures/with-normalizr.JPG" alt="">
     </section>
     <section class="slide">
         <h2>Middleware</h2>
-        <p>It provides a third-party extension point between dispatching an action, and the moment it reaches the reducer</p>
+        <p>It provides a third-party extension point between dispatching an action, and the moment it reaches the reducer.</p>
+        <p>With a help of it you can hold side effects separately.</p>
         <ul>
             <li class="next">logging</li>
             <li class="next">crash reporting</li>
@@ -392,19 +507,48 @@
             <code>}</code>
         </pre>
     </section>
+    <section class="slide">
+        <h2>Complex async code</h2>
+        <img src="pictures/without-epic.jpg" alt="life without epic" height="85%">
+    </section>
+    <section class="slide epics">
+        <style>
+            .epics code {
+                font-size: 0.9em;
+            }
+        </style>
+        <h2>Redux-observable</h2>
+        <pre>
+            <code>Rx.Observable.fromEvent(this.refs.input, 'input')</code>
+            <code>    .map(event => event.target.value)</code>
+            <code>    .filter(value => !!value)</code>
+            <code>    .debounceTime(500)</code>
+            <code>    .switchMap(searchTerm =></code>
+            <code>        ajax('/api/search', searchTerm)</code>
+            <code>        .map(payload => ({ type: 'QUERY_FULLFILLED', payload }))</code>
+            <code>        .catch(payload => ({</code>
+            <code>             type: 'QUERY_FULLFILLED',</code>
+            <code>             error: true,</code>
+            <code>             payload</code>
+            <code>        }))</code>
+        </pre>
+    </section>
+    <section class="slide epics">
+        <h2><a href="https://github.com/ngrx/store">ngrx/store</a></h2>
+        <img src="pictures/angular2.png" alt="ngrx/store" class="cover">
+    </section>
     <section class="slide why-redux">
         <style>
         </style>
         <h2>Why should I use redux?</h2>
         <img src="pictures/why.jpg">
         <ul>
-            <li>flux like solution</li>
-            <li>it is maintained by Dan Abramov (Facebook developer)</li>
-            <li>it is tiny (2kB, including dependencies)</li>
-            <li>easy to test</li>
+            <li>to learn functional programming</li>
+            <li>to simplify project architecture</li>
+            <li>to test easily</li>
             <li>documentation (+ free video course on egghead.io)</li>
             <li>it has great community</li>
-            <li>believe me</li>
+            <li>it is tiny (2kB, including dependencies)</li>
         </ul>
     </section>
     <section class="slide why-redux">
@@ -619,15 +763,16 @@
             <li>...</li>
         </ul>
     </section>
-    <section class="slide google-trends">
-        <style>
-        </style>
-        <h2>Google trends</h2>
-        <script type="text/javascript" src="https://ssl.gstatic.com/trends_nrtr/760_RC01/embed_loader.js"></script> <script type="text/javascript"> trends.embed.renderExploreWidget("TIMESERIES", {"comparisonItem":[{"keyword":"redux js","geo":"","time":"today 5-y"}],"category":0,"property":""}, {"exploreQuery":"q=redux%20js","guestPath":"https://www.google.ru:443/trends/embed/"});</script>
-    </section>
     <section class="slide white">
         <h2>Thank you!</h2>
         <a href="https://kitos.github.io/redux-talk/">kitos.github.io/redux-talk</a>
+        <br>
+        <br>
+        <h2>Further reading</h2>
+        <ul>
+            <li><a href="http://blog.isquaredsoftware.com/2017/05/idiomatic-redux-tao-of-redux-part-1/">Idiomatic Redux: The Tao of Redux, Part 1 - Implementation and Intent</a></li>
+            <li><a href="http://blog.isquaredsoftware.com/2017/05/idiomatic-redux-tao-of-redux-part-2/">Idiomatic Redux: The Tao of Redux, Part 2 - Practice and Philosophy</a></li>
+        </ul>
     </section>
     <section class="slide white">
         <h2 class="shout shrink">Questions</h2>
@@ -636,8 +781,6 @@
         <a href="https://github.com/shower/shower">Powered by Shower</a>
     </p>
     <div class="progress"></div>
-    <script src="build/vendors.js"></script>
-    <script src="build/main.js"></script>
     <script src="shower/shower.min.js"></script>
 </body>
 
